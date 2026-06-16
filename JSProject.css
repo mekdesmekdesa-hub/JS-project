@@ -1,0 +1,48 @@
+body{
+    background-color: #000000;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+canvas{
+    background: rgb(93, 88, 88);
+    /*border:20px solid blueviolet;*/
+   
+}
+/*learning HTMLDiv and grid
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    border: 2px solid #420de0;
+}
+.container div{
+    border: 1px solid #7f1818;
+}
+.body{
+    display: flex;
+    width: 100%;
+}
+.body1{
+    flex-grow:4;
+    background-color: #420de0;
+}
+.body2{
+
+    flex-grow:2;
+}
+.body3{
+    flex-grow:3;
+}
+.header,.footer{
+    background-color: #659afd;
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+}
+*/
