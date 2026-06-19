@@ -24,7 +24,6 @@ function draw(){
     drawnigPen.clearRect(0,0,canvas.width,canvas.height);
     drawnigPen.fillStyle="pink";
     drawnigPen.fillRect(x,y,20,20);
-  
 }
 function move(){
     update();
