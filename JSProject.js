@@ -38,6 +38,18 @@ function handleKeys(event){
     }
 }
 function update(){
+    if (direction==="LEFT"){
+        x=x-20;
+    }
+    else if(direction==="RIGHT"){
+        x=x+20;
+    }
+    else if(direction==="UP"){
+        y=y-20;
+    }
+    else if(direction==="DOWN"){
+        y=y+20;
+    }
     if(x>=boardWidth-20){//wall collision
         x=x;
     }
@@ -61,4 +73,5 @@ function move(){
     draw();
     requestAnimationFrame(move);
 }
-move();
+move()
+setInterval(update,200);
