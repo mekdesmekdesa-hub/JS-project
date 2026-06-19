@@ -6,7 +6,9 @@ canvas.height=window.innerHeight;
 drawnigPen.lineWidth=20;
 const offSet=drawnigPen.lineWidth/2;
 drawnigPen.strokeStyle="blue";
-drawnigPen.strokeRect(offSet,offSet,canvas.width-drawnigPen.lineWidth,canvas.height-drawnigPen.lineWidth);
+const boardWidth=canvas.width-drawnigPen.lineWidth;
+const boardHeight=canvas.height-drawnigPen.lineWidth;
+drawnigPen.strokeRect(offSet,offSet,boardWidth,boardHeight);
 //snake body
 drawnigPen.fillStyle="pink";
 drawnigPen.fillRect(50,50,20,20);
@@ -18,7 +20,12 @@ drawnigPen.fill();
 let x=50;
 let y=50;
 function update(){
-    x=x+1;
+    if(x>=boardWidth-20){
+        x=50;
+    }
+    else {
+        x=x+1;
+    }
 }
 function draw(){
     drawnigPen.clearRect(0,0,canvas.width,canvas.height);
