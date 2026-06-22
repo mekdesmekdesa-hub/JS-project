@@ -55,10 +55,22 @@ function handleKeys(event){
         direction="RIGHT";
     }
 }
+//food
 
 
+let food={
+    x:0,
+    y:0,
+    size:20
+}
 
+function generateFood(){
+    let gridOffset=snakeBodyX%snakeBody.size;
+    food.x=Math.floor(Math.random()*(board.width/snakeBody.size))*snakeBody.size+gridOffset;
+    food.y=Math.floor(Math.random()*(board.height/snakeBody.size))*snakeBody.size+gridOffset;
+}
 
+generateFood();
 //game loop starts here
 let gameLoop=requestAnimationFrame(move);
 let lastUpdateTime=0;
@@ -101,10 +113,13 @@ function update(){
     }
 
 }
-//next wall collision
 //beyond MVP... difficulty level, using velocity instead of direction,work on start and pause and restart button
 function draw(){
-    drawnigPen.clearRect(0,0,canvas.width,canvas.height);
+      drawnigPen.clearRect(0,0,canvas.width,canvas.height);
+    //draw food
+    drawnigPen.fillStyle="red";
+    drawnigPen.fillRect(food.x,food.y,food.size,food.size);
+    //draw snake body
     drawnigPen.fillStyle="pink";
     drawnigPen.fillRect(snakeBodyX,snakeBodyY,snakeBody.size,snakeBody.size);
     drawnigPen.lineWidth=20;
@@ -123,3 +138,4 @@ function move(currentTime){
     gameLoop=requestAnimationFrame(move);
 }
 move()
+//next add food and score
