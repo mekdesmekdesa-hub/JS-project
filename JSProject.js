@@ -1,17 +1,28 @@
 const canvas=document.getElementById("board");
 const drawnigPen=canvas.getContext("2d");
-//board
+//canvas
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 drawnigPen.lineWidth=20;
 const offSet=drawnigPen.lineWidth/2;
-drawnigPen.strokeStyle="blue";
-const boardWidth=canvas.width-drawnigPen.lineWidth;
-const boardHeight=canvas.height-drawnigPen.lineWidth;
-drawnigPen.strokeRect(offSet,offSet,boardWidth,boardHeight);
+//board
+let board={
+    width:canvas.width-drawnigPen.lineWidth,
+    height:canvas.height-drawnigPen.lineWidth,
+}
+//board border
+let boardBorder={
+    style:drawnigPen.strokeStyle="blue",
+    size:drawnigPen.strokeRect(offSet,offSet,board.width,board.height)
+}
+
+
 //snake body
-drawnigPen.fillStyle="pink";
-drawnigPen.fillRect(50,50,20,20);
+let snakeBody={
+    styel:drawnigPen.fillStyle="pink",
+    size:drawnigPen.fillRect(50,50,20,20),
+
+}
 //snake eye
 drawnigPen.fillStyle="black";
 drawnigPen.arc(62,58,4,0, Math.PI*2);
@@ -23,7 +34,7 @@ let y=50;
 let direction="RIGHT";
 document.addEventListener("keydown",handleKeys);
 function handleKeys(event){
-    alert("wow")
+    
     if (event.key=="ArrowUp"){
         direction="UP";
     }
@@ -37,7 +48,14 @@ function handleKeys(event){
         direction="RIGHT";
     }
 }
+let gameLoop=setInterval(update,200);
+function gameOver(){
+    clearInterval(gameLoop);
+    alert("Game Over!!!!!!!!")
+}
+
 function update(){
+    //move snake
     if (direction==="LEFT"){
         x=x-20;
     }
@@ -50,13 +68,23 @@ function update(){
     else if(direction==="DOWN"){
         y=y+20;
     }
-    if(x>=boardWidth-20){//wall collision
-        x=x;
+    //wall collision check
+/*
+    if(x<0){
+        gameOver();
     }
-    else {
-        x=x+1;
+    else if(x>boardWidth-snakeSize){
+         gameOver();     
     }
+     else if(y<0){
+         gameOver();     
+    }
+     else if(y>boardHeight-snakeSize){
+         gameOver();     
+    }*/
 }
+//next add everyyhing in to object variables
+
 function draw(){
     drawnigPen.clearRect(0,0,canvas.width,canvas.height);
     drawnigPen.fillStyle="pink";
@@ -66,7 +94,7 @@ function draw(){
     drawnigPen.strokeStyle="blue";
     const boardWidth=canvas.width-drawnigPen.lineWidth;
     const boardHeight=canvas.height-drawnigPen.lineWidth;
-    +drawnigPen.strokeRect(offSet,offSet,boardWidth,boardHeight);
+    drawnigPen.strokeRect(offSet,offSet,boardWidth,boardHeight);
 }
 function move(){
     update();
@@ -74,4 +102,3 @@ function move(){
     requestAnimationFrame(move);
 }
 move()
-setInterval(update,200);
