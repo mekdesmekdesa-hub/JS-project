@@ -19,17 +19,24 @@ let boardBorder={
 
 //snake body
 let snakeBody={
-    styel:drawnigPen.fillStyle="pink",
-    size:drawnigPen.fillRect(50,50,20,20),
-
-}
+    x:50,
+    y:50,
+    size:20
+    }
+drawnigPen.fillStyle="pink";
+drawnigPen.fillRect(
+    snakeBody.x,
+    snakeBody.y,
+    snakeBody.size,
+    snakeBody.size
+)
 //snake eye
 drawnigPen.fillStyle="black";
 drawnigPen.arc(62,58,4,0, Math.PI*2);
 drawnigPen.fill();
 //movement 
-let x=10;
-let y=50;
+let snakeBodyX=snakeBody.x;
+let snakeBodyY=snakeBody.y;
 //connecting keyboard keys to the JS
 let direction="RIGHT";
 document.addEventListener("keydown",handleKeys);
@@ -48,47 +55,58 @@ function handleKeys(event){
         direction="RIGHT";
     }
 }
-let gameLoop=setInterval(update,200);
-function gameOver(){
-    clearInterval(gameLoop);
-    alert("Game Over!!!!!!!!")
-}
 
+
+
+
+//game loop starts here
+let gameLoop=requestAnimationFrame(move);
+let lastUpdateTime=0;
+let speed=100;
+
+
+function gameOver(){
+    cancelAnimationFrame(gameLoop);
+
+   
+}
+//move snake after checking next position is not colliding with wall
 function update(){
-    //move snake
+    let nextX=snakeBodyX;
+    let nextY=snakeBodyY;
+    //check direction and update nextX and nextY
+
     if (direction==="LEFT"){
-        x=x-20;
-    }
+         nextX=snakeBodyX-20;
+        }
     else if(direction==="RIGHT"){
-        x=x+20;
-    }
+        nextX=snakeBodyX+20;
+       
+        }
+    
     else if(direction==="UP"){
-        y=y-20;
+        nextY=snakeBodyY-20;
     }
     else if(direction==="DOWN"){
-        y=y+20;
+         nextY=snakeBodyY+20;
+        
     }
-    //wall collision check
-/*
-    if(x<0){
+    //check wall collision.............needs debuging snake goes beyond blur line
+    if(nextX<offSet || nextX>board.width-snakeBody.size-offSet|| nextY<offSet || nextY>board.height-snakeBody.size-offSet){
         gameOver();
     }
-    else if(x>boardWidth-snakeSize){
-         gameOver();     
+    else{
+        snakeBodyX=nextX;
+        snakeBodyY=nextY;
     }
-     else if(y<0){
-         gameOver();     
-    }
-     else if(y>boardHeight-snakeSize){
-         gameOver();     
-    }*/
-}
-//next add everyyhing in to object variables
 
+}
+//next wall collision
+//beyond MVP... difficulty level, using velocity instead of direction,work on start and pause and restart button
 function draw(){
     drawnigPen.clearRect(0,0,canvas.width,canvas.height);
     drawnigPen.fillStyle="pink";
-    drawnigPen.fillRect(x,y,20,20);
+    drawnigPen.fillRect(snakeBodyX,snakeBodyY,snakeBody.size,snakeBody.size);
     drawnigPen.lineWidth=20;
     const offSet=drawnigPen.lineWidth/2;
     drawnigPen.strokeStyle="blue";
@@ -96,9 +114,12 @@ function draw(){
     const boardHeight=canvas.height-drawnigPen.lineWidth;
     drawnigPen.strokeRect(offSet,offSet,boardWidth,boardHeight);
 }
-function move(){
-    update();
-    draw();
-    requestAnimationFrame(move);
+function move(currentTime){
+    if(currentTime-lastUpdateTime>=speed){
+        lastUpdateTime=currentTime;
+        update();
+        draw();
+    }
+    gameLoop=requestAnimationFrame(move);
 }
 move()
