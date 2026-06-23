@@ -18,25 +18,25 @@ let boardBorder={
 
 
 //snake body
-let snakeBody={
+let snakeBody=[{
     x:50,
     y:50,
     size:20
-    }
+    }]
 drawnigPen.fillStyle="pink";
 drawnigPen.fillRect(
-    snakeBody.x,
-    snakeBody.y,
-    snakeBody.size,
-    snakeBody.size
+    snakeBody[0].x,
+    snakeBody[0].y,
+    snakeBody[0].size,
+    snakeBody[0].size
 )
 //snake eye
 drawnigPen.fillStyle="black";
 drawnigPen.arc(62,58,4,0, Math.PI*2);
 drawnigPen.fill();
 //movement 
-let snakeBodyX=snakeBody.x;
-let snakeBodyY=snakeBody.y;
+let snakeBodyX=snakeBody[0].x;
+let snakeBodyY=snakeBody[0].y;
 //connecting keyboard keys to the JS
 let direction="RIGHT";
 document.addEventListener("keydown",handleKeys);
@@ -66,15 +66,22 @@ let food={
 
 function generateFood(){
     let gridOffset=snakeBodyX%snakeBody.size;
+   
     food.x=Math.floor(Math.random()*(board.width/snakeBody.size))*snakeBody.size+gridOffset;
     food.y=Math.floor(Math.random()*(board.height/snakeBody.size))*snakeBody.size+gridOffset;
+    
+     return {
+        x:Math.floor(Math.random()*(board.width/snakeBody.size))*snakeBody.size+gridOffset,
+        y:Math.floor(Math.random()*(board.height/snakeBody.size))*snakeBody.size+gridOffset,
+        size:20
+    }
 }
 
 generateFood();
 //game loop starts here
 let gameLoop=requestAnimationFrame(move);
 let lastUpdateTime=0;
-let speed=100;
+let speed=200;
 
 
 function gameOver(){
@@ -110,6 +117,11 @@ function update(){
     else{
         snakeBodyX=nextX;
         snakeBodyY=nextY;
+    }
+    //check food collision
+    if (food.x===snakeBodyX && food.y===snakeBodyY){
+        food=generateFood();
+        
     }
 
 }
