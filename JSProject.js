@@ -39,6 +39,7 @@ let snakeBodyX=snakeBody[0].x;
 let snakeBodyY=snakeBody[0].y;
 //connecting keyboard keys to the JS
 let direction="RIGHT";
+let newHead;
 document.addEventListener("keydown",handleKeys);
 function handleKeys(event){
     
@@ -96,27 +97,41 @@ function update(){
     //check direction and update nextX and nextY
 
     if (direction==="LEFT"){
-         nextX=snakeBodyX-20;
+         newHead={
+            x:snakeBodyX-20,
+            y:snakeBodyY,
+            size:20
+         }
         }
     else if(direction==="RIGHT"){
-        nextX=snakeBodyX+20;
+        newHead={
+            x:snakeBodyX+20,
+            y:snakeBodyY,
+            size:20
        
         }
-    
+    }
     else if(direction==="UP"){
-        nextY=snakeBodyY-20;
+        newHead={
+            x:snakeBodyX,
+            y:snakeBodyY-20,
+            size:20
+        }
     }
     else if(direction==="DOWN"){
-         nextY=snakeBodyY+20;
-        
+        newHead={
+            x:snakeBodyX,
+            y:snakeBodyY+20,
+            size:20
+        }
     }
     //check wall collision.............needs debuging snake goes beyond blur line
-    if(nextX<offSet || nextX>board.width-snakeBody[0].size-offSet|| nextY<offSet || nextY>board.height-snakeBody[0].size-offSet){
+    if(newHead.x<offSet || newHead.x>board.width-snakeBody[0].size-offSet|| newHead.y<offSet || newHead.y>board.height-snakeBody[0].size-offSet){
         gameOver();
     }
     else{
-        snakeBodyX=nextX;
-        snakeBodyY=nextY;
+        snakeBodyX=newHead.x;
+        snakeBodyY=newHead.y;
     }
     //check food collision
     if (food.x===snakeBodyX && food.y===snakeBodyY){
