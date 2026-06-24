@@ -23,7 +23,12 @@ canvas{
     background-color: rgba(0, 0, 0, 0.2);
     padding: 10px;
 }
-
+.controls{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 /*learning HTMLDiv and grid
 .container{
     display: grid;

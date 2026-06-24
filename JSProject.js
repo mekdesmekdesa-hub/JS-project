@@ -124,6 +124,29 @@ function gameOver(){
 
    
 }
+//paly/pause button and functionality
+function toggleGameState(){
+    if(gameState==="running"){
+        gameState="paused";
+        cancelAnimationFrame(gameLoop);
+        pauseButton.textContent="Resume";
+        drawnigPen.fillStyle="rgba(0, 0, 0, 0.5)";
+        drawnigPen.fillRect(0, 0, canvas.width, canvas.height);
+        drawnigPen.fillStyle="white";
+        drawnigPen.font="50px Arial";
+        drawnigPen.textAlign="center";
+        drawnigPen.fillText("Game Paused",canvas.width/2,canvas.height/2);
+    }
+    else if(gameState==="paused"){
+        gameState="running";
+        lastUpdateTime=performance.now();
+        gameLoop=requestAnimationFrame(move);   
+        pauseButton.textContent="Pause";
+    }
+}
+const pauseButton=document.getElementById("pauseButton");
+pauseButton.addEventListener("click",toggleGameState);
+
 //move snake after checking next position is not colliding with wall
 function update(){
    
@@ -224,8 +247,8 @@ function move(currentTime){
 }
 move()
 
-//game over screen and restart button ...game over  function
+
 //pause/play button and functionality
 //restart button and functionality
 //speed update after eating food a certain number of times
-//high score counter and display it on the screen
+//fix bug where snake goes beyond the wall beyond blue line
