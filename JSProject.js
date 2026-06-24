@@ -88,7 +88,20 @@ function increaseScore(){
     score++; 
     scoreCounter.textContent=score;
 }
+//high score counter
+let highScore=Number(localStorage.getItem("highScoreStorage"))|| 0;
+let highScoreCounter=document.getElementById("highScore");
+highScoreCounter.textContent=highScore;
 
+function updateHighScore(){
+
+    if(score>highScore){
+        highScore=score;
+        localStorage.setItem("highScoreStorage",highScore);
+        highScoreCounter.textContent=highScore;
+    }
+}
+updateHighScore();
 //game loop starts here
 let gameLoop=requestAnimationFrame(move);
 let lastUpdateTime=0;
@@ -148,6 +161,7 @@ function update(){
     //check wall collision.............needs debuging snake goes beyond blur line
     if(newHead.x<offSet || newHead.x>board.width-snakeBody[0].size-offSet|| newHead.y<offSet || newHead.y>board.height-snakeBody[0].size-offSet){
         gameOver();
+        updateHighScore();
     }
     else{
         snakeBodyX=newHead.x;
@@ -192,6 +206,7 @@ function draw(){
         drawnigPen.font="50px Arial";
         drawnigPen.textAlign="center";
         drawnigPen.fillText("Game Over! Your score is: "+score,canvas.width/2,canvas.height/2);
+
     }
 }
 function move(currentTime){
