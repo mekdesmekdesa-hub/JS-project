@@ -92,9 +92,8 @@ function gameOver(){
 }
 //move snake after checking next position is not colliding with wall
 function update(){
-    let nextX=snakeBodyX;
-    let nextY=snakeBodyY;
-    //check direction and update nextX and nextY
+   
+    //check direction and update snakeBodyX and snakeBodyY accordingly
 
     if (direction==="LEFT"){
          newHead={
@@ -135,11 +134,17 @@ function update(){
     }
     //check food collision
     if (food.x===snakeBodyX && food.y===snakeBodyY){
-        food=generateFood();
+        snakeBody.unshift(newHead);
+        food=generateFood();}
+    else{
+        snakeBody.pop();
+        snakeBody.unshift(newHead);}
+
+        
         
     }
 
-}
+
 //beyond MVP... difficulty level, using velocity instead of direction,work on start and pause and restart button
 function draw(){
       drawnigPen.clearRect(0,0,canvas.width,canvas.height);
@@ -148,7 +153,9 @@ function draw(){
     drawnigPen.fillRect(food.x,food.y,food.size,food.size);
     //draw snake body
     drawnigPen.fillStyle="pink";
-    drawnigPen.fillRect(snakeBodyX,snakeBodyY,snakeBody[0].size,snakeBody[0].size);
+    for (let part of snakeBody){
+        drawnigPen.fillRect(part.x,part.y,snakeBody[0].size,snakeBody[0].size);
+    }
     drawnigPen.lineWidth=20;
     const offSet=drawnigPen.lineWidth/2;
     drawnigPen.strokeStyle="blue";
@@ -166,3 +173,4 @@ function move(currentTime){
 }
 move()
 //next add food and score
+//game over screen and restart button ...game over  function
