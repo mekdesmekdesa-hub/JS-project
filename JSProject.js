@@ -146,7 +146,31 @@ function toggleGameState(){
 }
 const pauseButton=document.getElementById("pauseButton");
 pauseButton.addEventListener("click",toggleGameState);
+//restart button and functionality
+function restartGame(){
+    snakeBody=[{
+        x:50,
+        y:50,
+        size:20
+    }];
+    snakeBodyX=snakeBody[0].x;
+    snakeBodyY=snakeBody[0].y;
+    direction="RIGHT";
+    score=0;
+    scoreCounter.textContent=score;
+    food=generateFood();
+    gameState="running";
+    lastUpdateTime=performance.now();
+    gameLoop=requestAnimationFrame(move);
 
+    drawnigPen.clearRect(0,0,canvas.width,canvas.height);       
+    drawnigPen.fillStyle="white";
+    drawnigPen.font="50px Arial";
+    drawnigPen.textAlign="center";
+    drawnigPen.fillText("Game Restarted",canvas.width/2,canvas.height/2);   
+}
+const restartButton=document.getElementById("restartButton");
+restartButton.addEventListener("click",restartGame);
 //move snake after checking next position is not colliding with wall
 function update(){
    
