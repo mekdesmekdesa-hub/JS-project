@@ -105,8 +105,27 @@ updateHighScore();
 //game loop starts here
 let gameLoop=requestAnimationFrame(move);
 let lastUpdateTime=0;
-let speed=200;
 
+//speed of the snake and difficulty level
+let speed;
+function updateSpeed(){
+    if(score<5){
+        speed=200;
+    }
+    else if(score>=5 && score<10){
+        speed=100;
+    }
+    else if(score>=10 && score<15){
+        speed=50;
+    }
+    else if(score>=15 && score<20){
+        speed=25;
+    }
+    else{
+        speed=20;
+    }
+}
+updateSpeed();
 
 //game state and game over screen
 let gameState="running";
@@ -214,6 +233,13 @@ function update(){
         snakeBodyX=newHead.x;
         snakeBodyY=newHead.y;
     }
+    //check self collision
+    for(let part of snakeBody){
+        if(newHead.x===part.x && newHead.y===part.y){
+            gameOver();
+            updateHighScore();
+        }
+    }
     //check food collision and update snake body accordingly
     if (food.x===snakeBodyX && food.y===snakeBodyY){
         snakeBody.unshift(newHead);
@@ -222,9 +248,6 @@ function update(){
     else{
         snakeBody.pop();
         snakeBody.unshift(newHead);}
-
-        
-        
     }
 
 
@@ -272,7 +295,6 @@ function move(currentTime){
 move()
 
 
-//pause/play button and functionality
-//restart button and functionality
+
 //speed update after eating food a certain number of times
 //fix bug where snake goes beyond the wall beyond blue line
