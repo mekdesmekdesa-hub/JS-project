@@ -65,14 +65,14 @@ let food={
 }
 
 function generateFood(){
-    let gridOffset=snakeBodyX%snakeBody.size;
+    let gridOffset=snakeBodyX%snakeBody[0].size;
    
-    food.x=Math.floor(Math.random()*(board.width/snakeBody.size))*snakeBody.size+gridOffset;
-    food.y=Math.floor(Math.random()*(board.height/snakeBody.size))*snakeBody.size+gridOffset;
+    food.x=Math.floor(Math.random()*(board.width/snakeBody[0].size))*snakeBody[0].size+gridOffset;
+    food.y=Math.floor(Math.random()*(board.height/snakeBody[0].size))*snakeBody[0].size+gridOffset;
     
      return {
-        x:Math.floor(Math.random()*(board.width/snakeBody.size))*snakeBody.size+gridOffset,
-        y:Math.floor(Math.random()*(board.height/snakeBody.size))*snakeBody.size+gridOffset,
+        x:Math.floor(Math.random()*(board.width/snakeBody[0].size))*snakeBody[0].size+gridOffset,
+        y:Math.floor(Math.random()*(board.height/snakeBody[0].size))*snakeBody[0].size+gridOffset,
         size:20
     }
 }
@@ -111,7 +111,7 @@ function update(){
         
     }
     //check wall collision.............needs debuging snake goes beyond blur line
-    if(nextX<offSet || nextX>board.width-snakeBody.size-offSet|| nextY<offSet || nextY>board.height-snakeBody.size-offSet){
+    if(nextX<offSet || nextX>board.width-snakeBody[0].size-offSet|| nextY<offSet || nextY>board.height-snakeBody[0].size-offSet){
         gameOver();
     }
     else{
@@ -133,7 +133,7 @@ function draw(){
     drawnigPen.fillRect(food.x,food.y,food.size,food.size);
     //draw snake body
     drawnigPen.fillStyle="pink";
-    drawnigPen.fillRect(snakeBodyX,snakeBodyY,snakeBody.size,snakeBody.size);
+    drawnigPen.fillRect(snakeBodyX,snakeBodyY,snakeBody[0].size,snakeBody[0].size);
     drawnigPen.lineWidth=20;
     const offSet=drawnigPen.lineWidth/2;
     drawnigPen.strokeStyle="blue";
