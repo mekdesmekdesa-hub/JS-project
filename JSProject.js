@@ -30,7 +30,7 @@ drawnigPen.fillRect(
     snakeBody[0].size,
     snakeBody[0].size
 )
-//snake eye
+//snake eye....too complex for MVP
 drawnigPen.fillStyle="black";
 drawnigPen.arc(62,58,4,0, Math.PI*2);
 drawnigPen.fill();
@@ -83,7 +83,7 @@ generateFood();
 //add score counter and display it on the screen
 let score=0;
 let scoreCounter=document.getElementById("score");
-scoreCounter.textContent=score;
+
 function increaseScore(){
     score++; 
     scoreCounter.textContent=score;
@@ -95,8 +95,19 @@ let lastUpdateTime=0;
 let speed=200;
 
 
+//game state and game over screen
+let gameState="running";
+
 function gameOver(){
-    cancelAnimationFrame(gameLoop);
+    gameState="over";
+
+    drawnigPen.fillStyle="black";
+    drawnigPen.fillRect(0,0,canvas.width,canvas.height);
+    drawnigPen.fillStyle="red";
+    drawnigPen.font="50px Arial";
+    drawnigPen.textAlign="center";
+    drawnigPen.fillText("Game Over+ Your score is: "+score,canvas.width/2,canvas.height/2);
+   
 
    
 }
@@ -173,8 +184,18 @@ function draw(){
     const boardWidth=canvas.width-drawnigPen.lineWidth;
     const boardHeight=canvas.height-drawnigPen.lineWidth;
     drawnigPen.strokeRect(offSet,offSet,boardWidth,boardHeight);
+    // game over screen
+    if (gameState==="over"){
+        drawnigPen.fillStyle="black";
+        drawnigPen.fillRect(0,0,canvas.width,canvas.height);
+        drawnigPen.fillStyle="red";
+        drawnigPen.font="50px Arial";
+        drawnigPen.textAlign="center";
+        drawnigPen.fillText("Game Over! Your score is: "+score,canvas.width/2,canvas.height/2);
+    }
 }
 function move(currentTime){
+    if(gameState==="running"){
     if(currentTime-lastUpdateTime>=speed){
         lastUpdateTime=currentTime;
         update();
@@ -182,7 +203,14 @@ function move(currentTime){
     }
     gameLoop=requestAnimationFrame(move);
 }
+     else{
+       gameLoop= cancelAnimationFrame(gameLoop);
+    }
+}
 move()
-//next score
+
 //game over screen and restart button ...game over  function
+//pause/play button and functionality
+//restart button and functionality
 //speed update after eating food a certain number of times
+//high score counter and display it on the screen
