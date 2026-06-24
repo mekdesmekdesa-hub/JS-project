@@ -79,6 +79,16 @@ function generateFood(){
 }
 
 generateFood();
+
+//add score counter and display it on the screen
+let score=0;
+let scoreCounter=document.getElementById("score");
+scoreCounter.textContent=score;
+function increaseScore(){
+    score++; 
+    scoreCounter.textContent=score;
+}
+
 //game loop starts here
 let gameLoop=requestAnimationFrame(move);
 let lastUpdateTime=0;
@@ -132,9 +142,10 @@ function update(){
         snakeBodyX=newHead.x;
         snakeBodyY=newHead.y;
     }
-    //check food collision
+    //check food collision and update snake body accordingly
     if (food.x===snakeBodyX && food.y===snakeBodyY){
         snakeBody.unshift(newHead);
+        increaseScore();
         food=generateFood();}
     else{
         snakeBody.pop();
@@ -172,5 +183,6 @@ function move(currentTime){
     gameLoop=requestAnimationFrame(move);
 }
 move()
-//next add food and score
+//next score
 //game over screen and restart button ...game over  function
+//speed update after eating food a certain number of times
