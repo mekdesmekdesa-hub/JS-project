@@ -55,6 +55,9 @@ function handleKeys(event){
     else if(event.key=="ArrowRight"){
         direction="RIGHT";
     }
+    else if(event.key==" "){
+        toggleGameState();
+    }
 }
 //food
 
@@ -296,5 +299,5 @@ move()
 
 
 
-//speed update after eating food a certain number of times
+
 //fix bug where snake goes beyond the wall beyond blue line
